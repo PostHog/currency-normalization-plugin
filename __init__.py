@@ -23,40 +23,33 @@ if not openexchangerates_api_key:
     print("🔻 Running posthog-maxmind-plugin without OPENEXCHANGERATES_API_KEY")
     print("🔺 No amounts will be normalized!")
     will_normalize = False
-else:
-    coinoxr.app_id = openexchangerates_api_key
-
-
-def fetch_rates():
-    try:
-        return coinoxr.Latest().get().body['rates']
-    except:
-        return None
-
-
-currency_rates = None
-currency_rates_fetched_at = None
-if will_normalize:
-    currency_rates = fetch_rates()
-    currency_rates_fetched_at = datetime.now()
-
 
 class CurrencyNormalizationPlugin(PluginBaseClass):
+    def __init__(self):
+        self.currency_rates = None
+        self.currency_rates_fetched_at = None
+        if will_normalize:
+            coinoxr.app_id = openexchangerates_api_key
+            self._fetch_rates()
+
+    def _fetch_rates(self):
+        try:
+            self.currency_rates = coinoxr.Latest().get().body['rates']
+            self.currency_rates_fetched_at = datetime.now()
+        except:
+            return None
+
     def process_event(self, event: PosthogEvent):
         if will_normalize:
-            global currency_rates
-            global currency_rates_fetched_at
-
             # last fetched a day ago
-            if not currency_rates or currency_rates_fetched_at < datetime.now() - timedelta(days=1):
-                currency_rates = fetch_rates()
-                currency_rates_fetched_at = datetime.now()
+            if not self.currency_rates or self.currency_rates_fetched_at < datetime.now() - timedelta(days=1):
+                self._fetch_rates()
 
-            if currency_rates:
+            if self.currency_rates:
                 amount = event.properties.get(amount_property, 0)
                 currency = event.properties.get(currency_property, None)
-                if currency and currency_rates[currency] and currency_rates[normalized_currency]:
-                    normalized_amount = round(amount * currency_rates[normalized_currency] / currency_rates[currency], 4)
+                if currency and self.currency_rates[currency] and self.currency_rates[normalized_currency]:
+                    normalized_amount = round(amount * self.currency_rates[normalized_currency] / self.currency_rates[currency], 4)
                     event.properties[normalized_amount_property] = normalized_amount
                     event.properties[normalized_currency_property] = normalized_currency
 
