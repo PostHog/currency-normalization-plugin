@@ -3,7 +3,7 @@
 Normalize currencies in events. E.g. amounts in EUR, USD and GBP will all be converted to EUR.
 
 1. Install [posthog-cli](https://github.com/PostHog/posthog-cli)
-2. Install this plugin: `posthog plugin install https://github.com/mariusandra/posthog-currency-normalization-plugin`
+2. Install this plugin: `posthog plugin install https://github.com/PostHog/posthog-currency-normalization-plugin`
 3. [Sign up](https://openexchangerates.org/) to OpenExchangeRates.org 
 4. Set the following env variables:
   - `OPENEXCHANGERATES_API_KEY=COPY_API_KEY_HERE`
