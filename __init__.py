@@ -29,8 +29,8 @@ class CurrencyNormalizationPlugin(PluginBaseClass):
             print("🔺 No amounts will be normalized!")
             self.will_normalize = False
 
-        self.currency_rates = None
-        self.currency_rates_fetched_at = None
+        self.currency_rates = self.cache.get("currency_rates")
+        self.currency_rates_fetched_at = self.cache.get("currency_rates_fetched_at")
 
         if self.will_normalize:
             coinoxr.app_id = self.openexchangerates_api_key
@@ -38,16 +38,20 @@ class CurrencyNormalizationPlugin(PluginBaseClass):
 
     def _fetch_rates(self):
         try:
-            self.currency_rates_fetched_at = datetime.now()
-            self.currency_rates = coinoxr.Latest().get().body['rates']
+            # last fetched a day ago
+            if not self.currency_rates or self.currency_rates_fetched_at < datetime.now() - timedelta(days=1):
+                self.currency_rates_fetched_at = datetime.now()
+                self.currency_rates = coinoxr.Latest().get().body['rates']
+
+                self.cache.set("currency_rates", self.currency_rates)
+                self.cache.set("currency_rates_fetched_at", self.currency_rates_fetched_at)
+
         except Exception as e:
-            print("🔺 Error fetching currency rates! {}: \"{}\"".format(type(e), e.message))
+            print("🔺 Error fetching currency rates! {}: \"{}\"".format(type(e), e))
 
     def process_event(self, event: PosthogEvent):
         if self.will_normalize:
-            # last fetched a day ago
-            if not self.currency_rates or self.currency_rates_fetched_at < datetime.now() - timedelta(days=1):
-                self._fetch_rates()
+            self._fetch_rates()
 
             if self.currency_rates:
                 amount = event.properties.get(self.amount_property, 0)
