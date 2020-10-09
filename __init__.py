@@ -20,12 +20,12 @@ class CurrencyNormalizationPlugin(PluginBaseClass):
         self.will_normalize = True
 
         if not self.normalized_currency:
-            print("🔻 Running posthog-maxmind-plugin without the 'normalized_currency' config key")
+            print("🔻 Running posthog-currency-normalization-plugin without the 'normalized_currency' config key")
             print("🔺 No amounts will be normalized!")
             self.will_normalize = False
 
         if not self.openexchangerates_api_key:
-            print("🔻 Running posthog-maxmind-plugin without 'openexchangerates_api_key' config key")
+            print("🔻 Running posthog-currency-normalization-plugin without 'openexchangerates_api_key' config key")
             print("🔺 No amounts will be normalized!")
             self.will_normalize = False
 
