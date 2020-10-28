@@ -11,22 +11,18 @@ Normalize currencies in events. E.g. amounts in EUR, USD and GBP will all be con
 ```json
 {
     "name": "posthog-currency-normalization-plugin",
-    "path": "https://github.com/PostHog/posthog-currency-normalization-plugin",
-    "config": {
-        "openexchangerates_api_key": "COPY KEY HERE",
-        "normalized_currency": "EUR"
+    "url": "https://github.com/PostHog/posthog-currency-normalization-plugin",
+    "global": {
+        "enabled": true,
+        "config": {
+            "openExchangeRatesApiKey": "<COPY KEY HERE>",
+            "normalizedCurrency": "EUR",
+            "amountProperty": "amount",
+            "currencyProperty": "currency",
+            "normalizedAmountProperty": "normalized_amount",
+            "normalizedCurrencyProperty": "normalized_currency"
+        }
     }
 }
 ```
-5. Optionally update some of the other variables:
-```json
-{
-    "openexchangerates_api_key": "",
-    "normalized_currency": "",
-    "amount_property": "amount",
-    "currency_property": "currency",
-    "normalized_amount_property": "normalized_amount",
-    "normalized_currency_property": "normalized_currency"
-}
-```
-6. Run PostHog
+5. Run PostHog
