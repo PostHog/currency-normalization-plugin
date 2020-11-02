@@ -15,12 +15,10 @@ async function fetchRates(config) {
             cache.set('currency_rates', json['rates'])
             cache.set('currency_rates_fetched_at', new Date().getTime())
         } else {
-            console.error('🔺 Error fetching currency rates!')
-            console.error(json)
+            throw new Error('Error fetching currency rates!')
         }
     } catch (e) {
-        console.error('🔺 Error fetching currency rates!')
-        console.error(e)
+        throw new Error('Error fetching currency rates!')
     }
 }
 

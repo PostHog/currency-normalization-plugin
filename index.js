@@ -4,7 +4,7 @@ async function setupTeam({ config, teamId }) {
     if (apiKey) {
         await fetchRatesIfNeeded(config)
     } else {
-        console.error('No API key found!', config, { teamId })
+        throw new Error('No API key found!')
     }
 }
 
