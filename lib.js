@@ -1,11 +1,11 @@
-async function fetchRatesIfNeeded(config) {
+async function fetchRatesIfNeeded(config, cache) {
     const currencyRatesFetchedAt = await cache.get('currency_rates_fetched_at')
     if (!currencyRatesFetchedAt || currencyRatesFetchedAt < new Date().getTime() - 86400 * 1000) { // 24h
-        await fetchRates(config)
+        await fetchRates(config, cache)
     }
 }
 
-async function fetchRates(config) {
+async function fetchRates(config, cache) {
     try {
         const url = `https://openexchangerates.org/api/latest.json?app_id=${config['openExchangeRatesApiKey']}`
         const response = await fetch(url)

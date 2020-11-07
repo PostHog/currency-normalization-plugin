@@ -1,14 +1,14 @@
-async function setupTeam({ config, teamId }) {
+async function setupTeam({ config, cache }) {
     const apiKey = config['openExchangeRatesApiKey'] || null
 
     if (apiKey) {
-        await fetchRatesIfNeeded(config)
+        await fetchRatesIfNeeded(config, cache)
     } else {
         throw new Error('No API key found!')
     }
 }
 
-async function processEvent(event, { config }) {
+async function processEvent(event, { config, cache }) {
     const {
         openExchangeRatesApiKey,
         normalizedCurrency,
@@ -25,7 +25,7 @@ async function processEvent(event, { config }) {
         typeof event.properties[amountProperty] !== 'undefined' &&
         typeof event.properties[currencyProperty] !== 'undefined'
     ) {
-        await fetchRatesIfNeeded(config)
+        await fetchRatesIfNeeded(config, cache)
         const rates = await cache.get('currency_rates')
 
         if (rates) {
