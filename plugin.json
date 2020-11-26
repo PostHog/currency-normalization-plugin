@@ -3,7 +3,6 @@
   "url": "https://github.com/mariusandra/posthog-currency-normalization-plugin",
   "description": "Convert ingested payment values between currencies",
   "main": "index.js",
-  "lib": "lib.js",
   "config": {
     "openExchangeRatesApiKey": {
       "name": "OpenExchangeRates API Key",
