@@ -14,7 +14,7 @@
     },
     "homepage": "https://github.com/PostHog/posthog-currency-normalization-plugin#readme",
     "scripts": {
-        "test": "node --experimental-vm-modules node_modules/.bin/jest --env=node"
+        "test": "jest"
     },
     "config": {
         "openExchangeRatesApiKey": {
