@@ -1,4 +1,4 @@
-export async function setupPlugin({ config, cache }) {
+async function setupPlugin({ config, cache }) {
     const apiKey = config['openExchangeRatesApiKey'] || null
 
     if (apiKey) {
@@ -8,7 +8,7 @@ export async function setupPlugin({ config, cache }) {
     }
 }
 
-export async function processEvent(event, { config, cache }) {
+async function processEvent(event, { config, cache }) {
     const {
         openExchangeRatesApiKey,
         normalizedCurrency,
@@ -33,7 +33,7 @@ export async function processEvent(event, { config, cache }) {
             const currency = event.properties[currencyProperty]
 
             if (rates[currency] && rates[normalizedCurrency]) {
-                const normalizedAmount = roundToDigits(amount * rates[normalizedCurrency] / rates[currency], 4)
+                const normalizedAmount = roundToDigits((amount * rates[normalizedCurrency]) / rates[currency], 4)
                 event.properties[normalizedAmountProperty] = normalizedAmount
                 event.properties[normalizedCurrencyProperty] = normalizedCurrency
             }
@@ -43,11 +43,17 @@ export async function processEvent(event, { config, cache }) {
     return event
 }
 
-// lib functions
+module.exports = {
+    setupPlugin,
+    processEvent,
+}
+
+// Internal library functions below
 
 async function fetchRatesIfNeeded(config, cache) {
     const currencyRatesFetchedAt = await cache.get('currency_rates_fetched_at')
-    if (!currencyRatesFetchedAt || currencyRatesFetchedAt < new Date().getTime() - 86400 * 1000) { // 24h
+    if (!currencyRatesFetchedAt || currencyRatesFetchedAt < new Date().getTime() - 86400 * 1000) {
+        // 24h
         await fetchRates(config, cache)
     }
 }

@@ -1,5 +1,4 @@
-import { jest } from '@jest/globals'
-import {
+const {
     createEvent,
     createIdentify,
     createPageview,
@@ -7,9 +6,9 @@ import {
     getMeta,
     resetMeta,
     clone,
-} from 'posthog-plugins/test/utils.mjs'
-import { setupPlugin, processEvent } from '../index'
-import rates from './rates.json'
+} = require('posthog-plugins/test/utils.js')
+const { setupPlugin, processEvent } = require('../index')
+const rates = require('./rates.json')
 
 global.fetch = jest.fn(async () => ({
     json: async () => rates,
