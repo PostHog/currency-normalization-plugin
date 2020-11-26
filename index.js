@@ -1,4 +1,4 @@
-async function setupPlugin({ config, cache }) {
+export async function setupPlugin({ config, cache }) {
     const apiKey = config['openExchangeRatesApiKey'] || null
 
     if (apiKey) {
@@ -8,7 +8,7 @@ async function setupPlugin({ config, cache }) {
     }
 }
 
-async function processEvent(event, { config, cache }) {
+export async function processEvent(event, { config, cache }) {
     const {
         openExchangeRatesApiKey,
         normalizedCurrency,
