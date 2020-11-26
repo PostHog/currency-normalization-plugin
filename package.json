@@ -12,5 +12,43 @@
     "bugs": {
         "url": "https://github.com/PostHog/posthog-currency-normalization-plugin/issues"
     },
-    "homepage": "https://github.com/PostHog/posthog-currency-normalization-plugin#readme"
+    "homepage": "https://github.com/PostHog/posthog-currency-normalization-plugin#readme",
+    "config": {
+        "openExchangeRatesApiKey": {
+            "name": "OpenExchangeRates API Key",
+            "type": "string",
+            "default": "",
+            "required": true
+        },
+        "normalizedCurrency": {
+            "name": "Currency to normalise to (e.g. \"EUR\")",
+            "type": "string",
+            "default": "",
+            "required": true
+        },
+        "amountProperty": {
+            "name": "Property key for the amount",
+            "type": "string",
+            "default": "amount",
+            "required": true
+        },
+        "currencyProperty": {
+            "name": "Property key for the currency",
+            "type": "string",
+            "default": "currency",
+            "required": true
+        },
+        "normalizedAmountProperty": {
+            "name": "Property key for the normalized amount",
+            "type": "string",
+            "default": "normalized_amount",
+            "required": true
+        },
+        "normalizedCurrencyProperty": {
+            "name": "Property key for the normalized currency",
+            "type": "string",
+            "default": "normalized_currency",
+            "required": true
+        }
+    }
 }
