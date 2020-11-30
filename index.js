@@ -1,14 +1,14 @@
-async function setupPlugin({ config, cache }) {
+async function setupPlugin(meta) {
     const apiKey = config['openExchangeRatesApiKey'] || null
 
     if (apiKey) {
-        await fetchRatesIfNeeded(config, cache)
+        await fetchRatesIfNeeded(meta)
     } else {
         throw new Error('No API key found!')
     }
 }
 
-async function processEvent(event, { config, cache }) {
+async function processEvent(event, meta) {
     const {
         openExchangeRatesApiKey,
         normalizedCurrency,
@@ -16,7 +16,7 @@ async function processEvent(event, { config, cache }) {
         currencyProperty,
         normalizedAmountProperty,
         normalizedCurrencyProperty,
-    } = config
+    } = meta.config
 
     if (
         openExchangeRatesApiKey &&
@@ -25,7 +25,7 @@ async function processEvent(event, { config, cache }) {
         typeof event.properties[amountProperty] !== 'undefined' &&
         typeof event.properties[currencyProperty] !== 'undefined'
     ) {
-        await fetchRatesIfNeeded(config, cache)
+        await fetchRatesIfNeeded(meta)
         const rates = await cache.get('currency_rates')
 
         if (rates) {
@@ -46,19 +46,25 @@ async function processEvent(event, { config, cache }) {
 module.exports = {
     setupPlugin,
     processEvent,
+    schedule: {
+        hourly: [fetchRatesIfNeeded],
+    },
+    webHooks: {
+        fetchRates
+    }
 }
 
 // Internal library functions below
 
-async function fetchRatesIfNeeded(config, cache) {
-    const currencyRatesFetchedAt = await cache.get('currency_rates_fetched_at')
+async function fetchRatesIfNeeded(meta) {
+    const currencyRatesFetchedAt = await meta.cache.get('currency_rates_fetched_at')
     if (!currencyRatesFetchedAt || currencyRatesFetchedAt < new Date().getTime() - 86400 * 1000) {
         // 24h
-        await fetchRates(config, cache)
+        await fetchRates(meta)
     }
 }
 
-async function fetchRates(config, cache) {
+async function fetchRates({ config, cache }) {
     try {
         const url = `https://openexchangerates.org/api/latest.json?app_id=${config['openExchangeRatesApiKey']}`
         const response = await fetch(url)
