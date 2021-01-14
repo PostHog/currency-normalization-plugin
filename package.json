@@ -16,44 +16,6 @@
     "scripts": {
         "test": "jest"
     },
-    "config": {
-        "openExchangeRatesApiKey": {
-            "name": "OpenExchangeRates API Key",
-            "type": "string",
-            "default": "",
-            "required": true
-        },
-        "normalizedCurrency": {
-            "name": "Currency to normalise to (e.g. \"EUR\")",
-            "type": "string",
-            "default": "",
-            "required": true
-        },
-        "amountProperty": {
-            "name": "Property key for the amount",
-            "type": "string",
-            "default": "amount",
-            "required": true
-        },
-        "currencyProperty": {
-            "name": "Property key for the currency",
-            "type": "string",
-            "default": "currency",
-            "required": true
-        },
-        "normalizedAmountProperty": {
-            "name": "Property key for the normalized amount",
-            "type": "string",
-            "default": "normalized_amount",
-            "required": true
-        },
-        "normalizedCurrencyProperty": {
-            "name": "Property key for the normalized currency",
-            "type": "string",
-            "default": "normalized_currency",
-            "required": true
-        }
-    },
     "devDependencies": {
         "jest": "^26.6.3",
         "posthog-plugins": "^0.2.2"
