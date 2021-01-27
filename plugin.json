@@ -1,40 +1,46 @@
 {
-    "name": "posthog-currency-normalization-plugin",
+    "name": "Currency Normalization",
     "url": "https://github.com/PostHog/posthog-currency-normalization-plugin",
     "description": "Convert ingested payment values between currencies",
     "main": "index.js",
-    "config": {
-        "openExchangeRatesApiKey": {
+    "config": [
+        {
+            "key": "openExchangeRatesApiKey",
             "name": "OpenExchangeRates API Key",
             "type": "string",
             "default": "",
             "required": true
         },
-        "normalizedCurrency": {
+        {
+            "key": "normalizedCurrency",
             "name": "Currency to normalise to (e.g. \"EUR\")",
             "type": "string",
             "default": "",
             "required": true
         },
-        "amountProperty": {
+        {
+            "key": "amountProperty",
             "name": "Property key for the amount",
             "type": "string",
             "default": "amount",
             "required": true
         },
-        "currencyProperty": {
+        {
+            "key": "currencyProperty",
             "name": "Property key for the currency",
             "type": "string",
             "default": "currency",
             "required": true
         },
-        "normalizedAmountProperty": {
+        {
+            "key": "normalizedAmountProperty",
             "name": "Property key for the normalized amount",
             "type": "string",
             "default": "normalized_amount",
             "required": true
         },
-        "normalizedCurrencyProperty": {
+        {
+            "key": "normalizedCurrencyProperty",
             "name": "Property key for the normalized currency",
             "type": "string",
             "default": "normalized_currency",
