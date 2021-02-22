@@ -1,10 +1,10 @@
-# Posthog Currency Normalization Plugin
+# [Posthog Currency Normalization Plugin](https://posthog.com/plugins/currency-normalization)
 
 Normalize currencies in events. E.g. amounts in EUR, USD and GBP will all be converted to EUR.
 
 ## Setup in PostHog
 
-1. Find the "plugins" page in PostHog.
+1. Visit the "Plugins" page in PostHog.
 2. Either select the plugin from the repository or copy the URL of this repository to install.
 3. Update the required settings (get the API key [here](https://openexchangerates.org/)) and enable the plugin.
 
