@@ -1,5 +1,5 @@
 async function setupPlugin(meta) {
-    const apiKey = config['openExchangeRatesApiKey'] || null
+    const apiKey = meta.config['openExchangeRatesApiKey'] || null
 
     if (apiKey) {
         await fetchRatesIfNeeded(meta)
