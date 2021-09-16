@@ -73,19 +73,6 @@ async function fetchRates({ config, cache }) {
         if (json && json['rates']) {
             cache.set('currency_rates', json['rates'])
             cache.set('currency_rates_fetched_at', new Date().getTime())
-            async function setupPlugin(meta) {
-    const apiKey = meta.config['openExchangeRatesApiKey'] || null
-
-    if (apiKey) {
-        await fetchRatesIfNeeded(meta)
-    } else {
-        throw new Error('No API key found!')
-    }
-}
-
-function roundToDigits(number, digits) {
-    return Math.round(number * Math.pow(10, digits)) / Math.pow(10, digits)
-}
         } else {
             throw new Error('Error fetching currency rates!')
         }
