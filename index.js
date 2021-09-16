@@ -1,5 +1,5 @@
 async function setupPlugin(meta) {
-    const apiKey = config['openExchangeRatesApiKey'] || null
+    const apiKey = meta.config['openExchangeRatesApiKey'] || null
 
     if (apiKey) {
         await fetchRatesIfNeeded(meta)
@@ -26,7 +26,7 @@ async function processEvent(event, meta) {
         typeof event.properties[currencyProperty] !== 'undefined'
     ) {
         await fetchRatesIfNeeded(meta)
-        const rates = await cache.get('currency_rates')
+        const rates = await meta.cache.get('currency_rates')
 
         if (rates) {
             const amount = event.properties[amountProperty]
