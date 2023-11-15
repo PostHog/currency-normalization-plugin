@@ -50,8 +50,8 @@ module.exports = {
         hourly: [fetchRatesIfNeeded],
     },
     webHooks: {
-        fetchRates
-    }
+        fetchRates,
+    },
 }
 
 // Internal library functions below
@@ -67,7 +67,7 @@ async function fetchRatesIfNeeded(meta) {
 async function fetchRates({ config, cache }) {
     try {
         const url = `https://openexchangerates.org/api/latest.json?app_id=${config['openExchangeRatesApiKey']}`
-        const response = await fetch(url)
+        const response = await fetch(url, { timeout: 1000 })
         const json = await response.json()
 
         if (json && json['rates']) {
