@@ -1,5 +1,7 @@
 # [Posthog Currency Normalization Plugin](https://posthog.com/plugins/currency-normalization)
 
+This plugin is deprecated, it will be skipped in `process_persons=false` mode.
+
 Normalize currencies in events. E.g. amounts in EUR, USD and GBP will all be converted to EUR.
 
 ## Setup in PostHog
