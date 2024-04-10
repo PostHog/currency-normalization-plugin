@@ -1,7 +1,7 @@
 {
     "name": "Currency Normalization",
     "url": "https://github.com/PostHog/posthog-currency-normalization-plugin",
-    "description": "Convert ingested payment values between currencies",
+    "description": "Deprecated, will be skipped if process_person=false",
     "main": "index.js",
     "config": [
         {
